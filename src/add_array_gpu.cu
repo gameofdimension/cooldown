@@ -48,7 +48,7 @@ int main(int argc, char** argv)
   } else if (std::string(argv[1]) == "2") {
       add_thread<<<1, 256>>>(N, x, y);
   } else if (std::string(argv[1]) == "3") {
-      int blockSize = 256;
+      int blockSize = 1024;
       int numBlocks = (N + blockSize - 1) / blockSize;
       printf("%d, %d\n", numBlocks, blockSize);
       add_block<<<numBlocks, blockSize>>>(N, x, y);
