@@ -21,8 +21,8 @@ __global__
 void add_block(int n, float *x, float *y)
 {
   int i = blockIdx.x * blockDim.x + threadIdx.x;
-  // int stride = blockDim.x * gridDim.x;
-  // printf("kernel %d\n", gridDim.x);
+  int stride = blockDim.x * gridDim.x;
+  printf("kernel %d, %d\n", gridDim.x, stride);
   // for (int i = index; i < n; i += stride)
     y[i] = x[i] + y[i];
 }
