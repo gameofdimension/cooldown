@@ -20,11 +20,10 @@ void add_thread(int n, float *x, float *y)
 __global__
 void add_block(int n, float *x, float *y)
 {
-  int index = blockIdx.x * blockDim.x + threadIdx.x;
-  int stride = blockDim.x * gridDim.x;
+  int i = blockIdx.x * blockDim.x + threadIdx.x;
+  // int stride = blockDim.x * gridDim.x;
   // printf("kernel %d\n", gridDim.x);
   // for (int i = index; i < n; i += stride)
-  int i = index;
     y[i] = x[i] + y[i];
 }
 
