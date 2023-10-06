@@ -17,6 +17,15 @@ void add_thread(int n, float *x, float *y)
       y[i] = x[i] + y[i];
 }
 
+__global__
+void add_block(int n, float *x, float *y)
+{
+  int index = blockIdx.x * blockDim.x + threadIdx.x;
+  int stride = blockDim.x * gridDim.x;
+  for (int i = index; i < n; i += stride)
+    y[i] = x[i] + y[i];
+}
+
 
 int main(int argc, char** argv)
 {
@@ -38,6 +47,10 @@ int main(int argc, char** argv)
       add_whole<<<1, 1>>>(N, x, y);
   } else if (std::string(argv[1]) == "2") {
       add_thread<<<1, 256>>>(N, x, y);
+  } else if (std::string(argv[1]) == "3") {
+      int blockSize = 256;
+      int numBlocks = (N + blockSize - 1) / blockSize;
+      add_block<<<numBlocks, blockSize>>>(N, x, y);
   }
 
   // Wait for GPU to finish before accessing on host
